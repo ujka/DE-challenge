@@ -1,0 +1,7 @@
+bootstrapServers: "localhost:9092"
+groupID: "ooo"
+autoOffsetReset: "smallest"
+inputTopic: "input_part5"
+interval: "minute"
+readTimeout: 5
+outputTopic: "output_topic1"

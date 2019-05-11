@@ -1,0 +1,8 @@
+bootstrapServers: "localhost:9092"
+groupID: "ddrerddswl"
+autoOffsetReset: "smallest"
+inputTopic: "output_topic1"
+interval: "hour"
+readTimeout: 5
+outputTopic: "peks"
+consumers: 5
