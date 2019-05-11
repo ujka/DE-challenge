@@ -63,7 +63,7 @@ and here are the results:
 | 50000      | 5000    |
 | 100000     | 10001   |
 
-
+## TODO
 
 2. To measure frames per second I've used the following
 ```
@@ -97,9 +97,11 @@ So one way to scale could be:
 It will decode HLLs, merge them using `Merge` and when sure that all consumers sent their
 data to `middle`, `Count` for particular datetime, and output result to the output topic in similar
 manner that we know.
-I was curious to see how this would work so I've created prototype and put it to another repo so you can
+I was curious to see how this would work so I've created prototype and put it under parallel directory so you can
 take a look if you want. 
-Speed up was from 32s to 20s (3 consumers were used) so we were able to process 50000 frames per second.
+Disclaimer: This is just proof of concept, I am aware that there is a lot of duplicated code and
+other staff that could be done better. 
+Speed up was from 32s to 20s (3 consumers used) so we were able to process ~50000 frames per second.
 
 
 * `you may want to count things for different time frames but only do json parsing once.` - 
