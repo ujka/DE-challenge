@@ -60,10 +60,12 @@ and here are the results:
 | 250        | 249     |
 | 500        | 499     |
 | 1000       | 999     |
-| 50000      | 5000    |
-| 100000     | 10001   |
+| 10000      | 9999    |
+| 50000      | 50000   |
+| 100000     | 100001  |
 
-## TODO
+So it looks that algorithm is pretty accurate. In the readme from the hyperloglog repo they reported relative error of
+0.0045 when cardinality is up to 10000 and 0.006 when cardinality is up to 80000. 
 
 2. To measure frames per second I've used the following
 ```
@@ -83,8 +85,6 @@ Difference between real - user - sys ~ 5s is because of consumer read time out s
 is set to 5s. So we can conclude that processing 1,000,000 frames took us around 32s 
 which leads to ~ 31250 frames per second.
 
-3. 
-
 #### Bonus questions / Challenges
 * `how do you scale it to improve troughput.` - library that I used for HLL has a very nice answer to
 this, it provides us with three methods `Merge`, `GobEncode` and `GobDecode`. 
@@ -99,7 +99,7 @@ data to `middle`, `Count` for particular datetime, and output result to the outp
 manner that we know.
 I was curious to see how this would work so I've created prototype and put it under parallel directory so you can
 take a look if you want. 
-Disclaimer: This is just proof of concept, I am aware that there is a lot of duplicated code and
+**Disclaimer**: This is just proof of concept, I am aware that there is a lot of duplicated code and
 other staff that could be done better. 
 Speed up was from 32s to 20s (3 consumers used) so we were able to process ~50000 frames per second.
 
@@ -156,17 +156,14 @@ goarch: amd64
 pkg: tamedia
 BenchmarkJSONConversion                   200000             20842 ns/op             264 B/op          6 allocs/op
 ```
-# todo: EXPLAIN
+So we were able to perform 200000 conversions in 3s, 20842 ns/op which means that one conversions took us 0.02 millisecond
+which should be okay.
 
 #### Rough time estimation
 Maybe you are interested, so here is how I spent my time:
 1. One week learning Go - I used https://golang.org/ (blog and getting started) and HeadFirst Go
 2. One day studying about HyperLogLog, mostly paper mentioned above
 3. One weekend to implement solution and write this report
-
-
-
-
 
 
 
