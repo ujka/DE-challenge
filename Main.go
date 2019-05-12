@@ -49,7 +49,6 @@ func UnixtimeToString(unixTime int64, interval string) string {
 		return t.Format("Jan _2 2006")
 	case "week":
 		year, week := t.ISOWeek()
-		//return strconv.FormatInt(int64(year), 10) + " " + strconv.FormatInt(int64(week), 10)
 		return fmt.Sprintf("%d %d", year, week)
 	case "month":
 		return t.Format("Jan 2006")
@@ -167,7 +166,6 @@ func main() {
 				hll.Add(hashID)
 				if input.TimeStamp > dateUnixtime[date] {
 					dateUnixtime[date] = input.TimeStamp
-					// time to output?
 				}
 			} else if isNew(date, datesInMap) {
 				hllEstimator, _ := hyperloglog.NewPlus(18)
