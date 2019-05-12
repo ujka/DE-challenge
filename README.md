@@ -16,14 +16,14 @@ forward to it :)
 
 #### Idea of the solution:
 1. Create data structures that will be used to reach business requirements:
-    * map named container - datetime is key and struct HyperLogLog++ is value
-    * map named dateUnixtime - datetime is key and unixtime is value
+    * map named `container` - datetime is key and struct HyperLogLog++ is value
+    * map named `dateUnixtime` - datetime is key and unixtime is value
 2. Read the data from the kafka input
 3. Parse input message to struct with timestamp and uniqueID as fields
 4. Convert timestamp(unixtime) to appropriate datetime(string) based on desired interval
 5. Add new key, value pairs to maps
-    * adding to container map is straightforward 
-    * when adding to dateUnixtime map, keep maximum unixtime values that are mapped
+    * adding to `container` map is straightforward 
+    * when adding to `dateUnixtime` map, keep maximum unixtime values that are mapped
     to specific datetime. E.g. if 1111111 unixtime represents 31.5.2014. and 222222 also
     represents 31.5.2014., our map will be `{'31.5.2104.':222222}`. This will allow us to
     output data to kafka as soon as possible.
