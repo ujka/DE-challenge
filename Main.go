@@ -60,7 +60,7 @@ func UnixtimeToString(unixTime int64, interval string) string {
 	}
 }
 
-type inputMessage struct {
+type InputMessage struct {
 	TimeStamp int64  `json:"ts"`
 	UniqueID  string `json:"uid"`
 }
@@ -111,6 +111,16 @@ func outputToKafka(datesInMap []string, dateUnixtime map[string]int64, container
 	return datesInMap
 }
 
+func ParseInputJSON(msg []byte, interval string) (InputMessage, string) {
+	// parse input message
+	var input InputMessage
+	err := json.Unmarshal(msg, &input)
+	logErr(err)
+	// date need for HyperLogLog
+	date := UnixtimeToString(input.TimeStamp, interval)
+	return input, date
+}
+
 func logErr(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -150,14 +160,8 @@ func main() {
 	for {
 		msg, err := c.ReadMessage(time.Second * config.ReadTimeout)
 		if err == nil {
-			// parse input message
-			var input inputMessage
-			err := json.Unmarshal(msg.Value, &input)
-			logErr(err)
-			// data need for HyperLogLog
+			input, date := ParseInputJSON(msg.Value, config.Interval)
 			var hashID hash64 = []byte(input.UniqueID)
-			date := UnixtimeToString(input.TimeStamp, config.Interval)
-			logErr(err)
 			hll, ok := container[date]
 			if ok {
 				hll.Add(hashID)
