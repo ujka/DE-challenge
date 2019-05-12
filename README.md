@@ -12,7 +12,7 @@ forward to it :)
 
 #### Running script
 1. Open config.yml and configure it
-2. go run Main.go
+2. `>>> go run Main.go`
 
 #### Idea of the solution:
 1. Create data structures that will be used to reach business requirements:
@@ -25,7 +25,7 @@ forward to it :)
     * adding to container map is straightforward 
     * when adding to dateUnixtime map, keep maximum unixtime values that are mapped
     to specific datetime. E.g. if 1111111 unixtime represents 31.5.2014. and 222222 also
-    represents 31.5.2014., our map will be {'31.5.2104.':222222}. This will allow us to
+    represents 31.5.2014., our map will be `{'31.5.2104.':222222}`. This will allow us to
     output data to kafka as soon as possible.
 6. Check if it's time to output counting result to kafka 
     * since the requirement is to output data as soon as possible we will check how many
